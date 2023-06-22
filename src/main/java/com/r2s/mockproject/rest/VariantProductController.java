@@ -58,13 +58,6 @@ public class VariantProductController extends BaseRestController{
                 return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
             }
 
-            VariantProduct foundVariantProduct = this.variantProductService
-                    .findByName(newVariantProduct.get("name").toString()).orElse(null);
-            if(!ObjectUtils.isEmpty(foundVariantProduct)){
-                return super.error(ResponseCode.DATA_ALREADY_EXISTS.getCode(),
-                        ResponseCode.DATA_ALREADY_EXISTS.getMessage());
-            }
-
             Long productId = Long.parseLong(newVariantProduct.get("productId").toString());
             Product foundProduct = this.productService.findProductById(productId);
             if (ObjectUtils.isEmpty(foundProduct)) {
@@ -77,7 +70,35 @@ public class VariantProductController extends BaseRestController{
         }catch(Exception e){
             e.printStackTrace();
         }
+        return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
+    }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateVariantProduct(@PathVariable long id,
+                                                  @RequestBody(required = false) Map<String, Object> newVariantProduct){
+        try{
+            if(ObjectUtils.isEmpty(newVariantProduct)
+                    || ObjectUtils.isEmpty(newVariantProduct.get("name"))
+                    || ObjectUtils.isEmpty(newVariantProduct.get("screenSize"))
+                    || ObjectUtils.isEmpty(newVariantProduct.get("storageCapacity"))
+                    || ObjectUtils.isEmpty(newVariantProduct.get("color"))
+                    || ObjectUtils.isEmpty(newVariantProduct.get("weight"))
+                    || ObjectUtils.isEmpty(newVariantProduct.get("price"))){
+                return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
+            }
+
+            VariantProduct foundVariantProduct = this.variantProductService.findVariantProductById(id);
+            if (ObjectUtils.isEmpty(foundVariantProduct)) {
+                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+            }
+
+            VariantProduct updatedVariantProduct = variantProductService.updateVariantProduct(id, newVariantProduct);
+            return super.success(new VariantProductDTOResponse(updatedVariantProduct));
+//            return super.success(updatedVariantProduct);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 }

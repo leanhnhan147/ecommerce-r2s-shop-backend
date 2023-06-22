@@ -18,6 +18,11 @@ public class VariantProductServiceImpl implements VariantProductService {
     VariantProductRepository variantProductRepository;
 
     @Override
+    public VariantProduct findVariantProductById(Long id) {
+        return this.variantProductRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Optional<VariantProduct> findByName(String name) {
         return this.variantProductRepository.findByName(name);
     }
@@ -38,6 +43,18 @@ public class VariantProductServiceImpl implements VariantProductService {
         variantProduct.setPrice(Double.parseDouble(newVariantProduct.get("price").toString()));
         variantProduct.setDeleted(false);
         variantProduct.setProduct(product);
+        return this.variantProductRepository.save(variantProduct);
+    }
+
+    @Override
+    public VariantProduct updateVariantProduct(Long id, Map<String, Object> newVariantProduct) {
+        VariantProduct variantProduct = this.findVariantProductById(id);
+        variantProduct.setName(newVariantProduct.get("name").toString());
+        variantProduct.setScreenSize(newVariantProduct.get("screenSize").toString());
+        variantProduct.setStorageCapacity(newVariantProduct.get("storageCapacity").toString());
+        variantProduct.setColor(newVariantProduct.get("color").toString());
+        variantProduct.setWeight(newVariantProduct.get("weight").toString());
+        variantProduct.setPrice(Double.parseDouble(newVariantProduct.get("price").toString()));
         return this.variantProductRepository.save(variantProduct);
     }
 }
