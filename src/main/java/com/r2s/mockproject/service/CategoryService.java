@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface CategoryService {
 
-    Category generateCategory(Map<String, Object> newCategory);
+    Optional<Category> findByName(String name);
 
     List<Category> getAllCategory();
 

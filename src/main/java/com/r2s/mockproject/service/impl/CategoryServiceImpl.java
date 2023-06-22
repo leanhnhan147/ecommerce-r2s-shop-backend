@@ -17,11 +17,8 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public Category generateCategory(Map<String, Object> newCategory) {
-        Category category = new Category();
-        category.setName(newCategory.get("name").toString());
-
-        return category;
+    public Optional<Category> findByName(String name) {
+        return this.categoryRepository.findByName(name);
     }
 
     @Override
@@ -31,9 +28,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category addCategory(Map<String, Object> newCategory) {
-        Category category = generateCategory(newCategory);
+        Category category = new Category();
+        category.setName(newCategory.get("name").toString());
         category.setDeleted(false);
-
         return this.categoryRepository.save(category);
     }
 }

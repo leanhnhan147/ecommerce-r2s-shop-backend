@@ -45,11 +45,11 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login", "/users/**")
+                .requestMatchers("/login")
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/**", "/categories/**", "").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/users/**", "/categories/**").hasAnyRole("ADMIN", "USER")
                 .and()
                 .authorizeHttpRequests()
                 .anyRequest().authenticated()

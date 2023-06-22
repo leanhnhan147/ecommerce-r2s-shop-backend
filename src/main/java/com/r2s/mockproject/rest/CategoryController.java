@@ -21,9 +21,6 @@ public class CategoryController extends BaseRestController {
     @Autowired
     CategoryService categoryService;
 
-    @Autowired
-    CategoryRepository categoryRepository;
-
     @GetMapping("")
     public ResponseEntity<?> getAllCategory(){
         try {
@@ -40,25 +37,23 @@ public class CategoryController extends BaseRestController {
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
-    @PreAuthorize("ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<?> addCaregory(@RequestBody(required = true)Map<String, Object> newCategory){
         try{
-
-            if(ObjectUtils.isEmpty(newCategory)){
+            if(ObjectUtils.isEmpty(newCategory)
+                || ObjectUtils.isEmpty(newCategory.get("name"))){
                 return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
             }
 
-            if(ObjectUtils.isEmpty(newCategory.get("name"))){
-                return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
-            }
-
-            Category foundCategory = this.categoryRepository.findByName(newCategory.get("name").toString()).orElse(null);
+            Category foundCategory = this.categoryService.findByName(newCategory.get("name").toString()).orElse(null);
             if(!ObjectUtils.isEmpty(foundCategory)){
                 return super.error(ResponseCode.DATA_ALREADY_EXISTS.getCode(), ResponseCode.DATA_ALREADY_EXISTS.getMessage());
             }
 
-            return super.success(new CategoryDTOResponse(this.categoryService.addCategory(newCategory)));
+            Category insertedCategory = categoryService.addCategory(newCategory);
+//            return super.success(new CategoryDTOResponse(insertedCategory));
+            return super.success(insertedCategory);
         }catch(Exception e){
             e.printStackTrace();
         }
