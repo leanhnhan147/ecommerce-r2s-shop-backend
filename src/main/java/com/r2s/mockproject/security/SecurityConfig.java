@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/**", "/categories/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/users/**", "/categories/**", "/variant-product/**").hasAnyRole("ADMIN", "USER")
                 .and()
                 .authorizeHttpRequests()
                 .anyRequest().authenticated()

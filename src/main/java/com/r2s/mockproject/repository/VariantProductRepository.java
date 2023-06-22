@@ -1,12 +1,12 @@
 package com.r2s.mockproject.repository;
 
-import com.r2s.mockproject.entity.Product;
+import com.r2s.mockproject.entity.VariantProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
-    Optional<Product> findByName(String name);
+public interface VariantProductRepository extends JpaRepository<VariantProduct, Long> {
+    Optional<VariantProduct> findByName(String name);
 }
