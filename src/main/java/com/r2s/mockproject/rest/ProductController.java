@@ -33,7 +33,6 @@ public class ProductController extends BaseRestController{
             List<ProductDTOResponse> responses = products.stream()
                     .map(product -> new ProductDTOResponse(product))
                     .collect(Collectors.toList());
-
             return super.success(responses);
         }catch (Exception e){
             e.printStackTrace();

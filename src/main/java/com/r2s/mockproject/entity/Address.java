@@ -34,7 +34,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-//    @JsonBackReference
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "address")

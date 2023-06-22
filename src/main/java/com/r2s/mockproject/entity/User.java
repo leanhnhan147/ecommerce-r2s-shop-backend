@@ -51,7 +51,7 @@ public class User {
     private Cart cart;
 
     @OneToMany(mappedBy = "user")
-//    @JsonManagedReference
+    @JsonManagedReference
     private List<Address> addresses ;
 
     @OneToMany(mappedBy = "user")
