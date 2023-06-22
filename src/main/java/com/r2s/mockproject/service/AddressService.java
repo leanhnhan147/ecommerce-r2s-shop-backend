@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface AddressService {
+    Address findAddressById(Long id);
 
     List<Address> getAllAddress();
 
     Address addAddress(Map<String, Object> newAddress, User user);
+
+    Address updateAddress(Long id, Map<String, Object> newAddress);
 }

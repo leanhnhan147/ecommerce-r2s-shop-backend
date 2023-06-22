@@ -55,7 +55,6 @@ public class AddressController extends BaseRestController {
                 return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
             }
 
-
             Long userId = Long.parseLong(newAddress.get("userId").toString());
             User foundUser = this.userService.findUserById(userId);
             if (ObjectUtils.isEmpty(foundUser)) {
@@ -68,7 +67,32 @@ public class AddressController extends BaseRestController {
         }catch(Exception e){
             e.printStackTrace();
         }
+        return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateAddress(@PathVariable long id,
+                                           @RequestBody(required = false) Map<String, Object> newAddress){
+        try{
+            if(ObjectUtils.isEmpty(newAddress)
+                    || ObjectUtils.isEmpty(newAddress.get("street"))
+                    || ObjectUtils.isEmpty(newAddress.get("district"))
+                    || ObjectUtils.isEmpty(newAddress.get("city"))
+                    || ObjectUtils.isEmpty(newAddress.get("country"))){
+                return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
+            }
+
+            Address foundAddress = this.addressService.findAddressById(id);
+            if (ObjectUtils.isEmpty(foundAddress)) {
+                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+            }
+
+            Address updatedAddress = addressService.updateAddress(id, newAddress);
+            return super.success(new AddressDTOResponse(updatedAddress));
+//            return super.success(updatedAddress);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 }

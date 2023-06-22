@@ -17,6 +17,11 @@ public class AddressServiceImpl implements AddressService {
     private AddressRepository addressRepository;
 
     @Override
+    public Address findAddressById(Long id) {
+        return this.addressRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public List<Address> getAllAddress() {
         return this.addressRepository.findAll();
     }
@@ -29,6 +34,16 @@ public class AddressServiceImpl implements AddressService {
         address.setCity(newAddress.get("city").toString());
         address.setCountry(newAddress.get("country").toString());
         address.setUser(user);
+        return this.addressRepository.save(address);
+    }
+
+    @Override
+    public Address updateAddress(Long id, Map<String, Object> newAddress) {
+        Address address = this.findAddressById(id);
+        address.setStreet(newAddress.get("street").toString());
+        address.setDistrict(newAddress.get("district").toString());
+        address.setCity(newAddress.get("city").toString());
+        address.setCountry(newAddress.get("country").toString());
         return this.addressRepository.save(address);
     }
 
