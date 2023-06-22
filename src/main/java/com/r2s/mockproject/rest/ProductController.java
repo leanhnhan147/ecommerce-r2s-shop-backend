@@ -7,6 +7,7 @@ import com.r2s.mockproject.entity.Product;
 import com.r2s.mockproject.service.CategoryService;
 import com.r2s.mockproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
@@ -39,6 +40,15 @@ public class ProductController extends BaseRestController{
         }
 
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
+    }
+
+    @GetMapping("/getProductById")
+    public ResponseEntity<?> getProductById(@RequestParam(name = "id", required = false, defaultValue = "1") Long id) {
+        Product foundProduct = this.productService.findProductById(id);
+        if (ObjectUtils.isEmpty(foundProduct)) {
+            return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+        }
+        return super.success(new ProductDTOResponse(foundProduct));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
