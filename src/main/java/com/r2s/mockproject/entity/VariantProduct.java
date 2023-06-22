@@ -1,5 +1,6 @@
 package com.r2s.mockproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,6 +40,7 @@ public class VariantProduct {
     private Boolean deleted;
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonBackReference
     private Product product;
 
     @OneToMany(mappedBy = "variantProduct")

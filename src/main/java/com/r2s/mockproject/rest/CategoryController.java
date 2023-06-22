@@ -3,8 +3,6 @@ package com.r2s.mockproject.rest;
 import com.r2s.mockproject.constants.ResponseCode;
 import com.r2s.mockproject.dto.CategoryDTOResponse;
 import com.r2s.mockproject.entity.Category;
-import com.r2s.mockproject.entity.User;
-import com.r2s.mockproject.repository.CategoryRepository;
 import com.r2s.mockproject.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

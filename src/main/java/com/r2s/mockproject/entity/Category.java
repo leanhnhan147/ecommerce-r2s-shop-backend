@@ -1,5 +1,6 @@
 package com.r2s.mockproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,8 @@ public class Category {
     @Column(columnDefinition = "boolean default false")
     private boolean deleted;
 
-    @OneToMany(mappedBy = "category")
-    private Set<Product> products;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Product> products;
 
 }
