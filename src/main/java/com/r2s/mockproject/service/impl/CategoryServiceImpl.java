@@ -17,6 +17,11 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
+    public Category findCategoryById(Long id) {
+        return this.categoryRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Optional<Category> findByName(String name) {
         return this.categoryRepository.findByName(name);
     }
@@ -31,6 +36,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         category.setName(newCategory.get("name").toString());
         category.setDeleted(false);
+        return this.categoryRepository.save(category);
+    }
+
+    @Override
+    public Category updateCategory(Long id, Map<String, Object> newCategory) {
+        Category category = this.findCategoryById(id);
+        category.setName(newCategory.get("name").toString());
         return this.categoryRepository.save(category);
     }
 }

@@ -77,6 +77,7 @@ public class UserController extends BaseRestController{
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable long id,
                                         @RequestBody(required = false) Map<String, Object> newUser) {
