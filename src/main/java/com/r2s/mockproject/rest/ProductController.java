@@ -46,7 +46,8 @@ public class ProductController extends BaseRestController{
     public ResponseEntity<?> addProduct(@RequestBody(required = true) Map<String, Object> newProduct){
         try{
             if(ObjectUtils.isEmpty(newProduct)
-                    || ObjectUtils.isEmpty(newProduct.get("name"))){
+                    || ObjectUtils.isEmpty(newProduct.get("name"))
+                    || ObjectUtils.isEmpty(newProduct.get("categoryId"))){
                 return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
             }
 
@@ -64,6 +65,31 @@ public class ProductController extends BaseRestController{
 
             Product insertedProduct = productService.addProduct(newProduct, foundCategory);
             return super.success(new ProductDTOResponse(insertedProduct));
+//            return super.success(insertedProduct);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable long id,
+                                           @RequestBody(required = false) Map<String, Object> newProduct){
+        try{
+            if(ObjectUtils.isEmpty(newProduct)
+                    || ObjectUtils.isEmpty(newProduct.get("name"))){
+                return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
+            }
+
+            Product foundProduct = this.productService.findProductById(id);
+            if (ObjectUtils.isEmpty(foundProduct)) {
+                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+            }
+
+            Product updatedProduct = productService.updateProduct(id, newProduct);
+            return super.success(new ProductDTOResponse(updatedProduct));
 //            return super.success(insertedProduct);
         }catch(Exception e){
             e.printStackTrace();

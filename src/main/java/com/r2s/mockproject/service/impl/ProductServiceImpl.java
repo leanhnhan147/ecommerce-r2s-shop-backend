@@ -47,6 +47,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(Long id, Map<String, Object> newProduct) {
-        return null;
+        Product product = this.findProductById(id);
+        product.setName(newProduct.get("name").toString());
+        return this.productRepository.save(product);
     }
 }
