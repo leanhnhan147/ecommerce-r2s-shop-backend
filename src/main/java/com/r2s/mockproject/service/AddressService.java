@@ -14,4 +14,6 @@ public interface AddressService {
     Address addAddress(Map<String, Object> newAddress, User user);
 
     Address updateAddress(Long id, Map<String, Object> newAddress);
+
+    void deleteAddress(Long id);
 }

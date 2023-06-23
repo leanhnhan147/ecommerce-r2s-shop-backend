@@ -50,7 +50,7 @@ public class User {
     @JsonManagedReference
     private Cart cart;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.ALL })
     @JsonManagedReference
     private List<Address> addresses ;
 

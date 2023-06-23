@@ -95,4 +95,19 @@ public class AddressController extends BaseRestController {
         }
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAddress(@PathVariable long id) {
+        try {
+            Address foundAddress = this.addressService.findAddressById(id);
+            if (ObjectUtils.isEmpty(foundAddress)) {
+                return error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+            }
+            this.addressService.deleteAddress(id);
+            return success(new AddressDTOResponse(foundAddress));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
+    }
 }
