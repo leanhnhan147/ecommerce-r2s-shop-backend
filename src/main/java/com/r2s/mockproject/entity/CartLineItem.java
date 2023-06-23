@@ -1,5 +1,6 @@
 package com.r2s.mockproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,10 +24,12 @@ public class CartLineItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
+    @JsonBackReference
     private Cart cart;
 
     @ManyToOne
     @JoinColumn(name = "variant_product_id")
+    @JsonBackReference
     private VariantProduct variantProduct;
 
 

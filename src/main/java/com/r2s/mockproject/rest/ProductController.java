@@ -37,7 +37,6 @@ public class ProductController extends BaseRestController{
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
@@ -78,7 +77,6 @@ public class ProductController extends BaseRestController{
         }catch(Exception e){
             e.printStackTrace();
         }
-
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
@@ -103,7 +101,6 @@ public class ProductController extends BaseRestController{
         }catch(Exception e){
             e.printStackTrace();
         }
-
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 }

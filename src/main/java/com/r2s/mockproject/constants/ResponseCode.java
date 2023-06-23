@@ -7,7 +7,10 @@ public enum ResponseCode {
     NO_CONTENT(2004, "No content"),
     INTERNAL_SERVER_ERROR(5000, "Internal server error"),
     USER_NOT_FOUND(4005, "User not found"),
-    SUBJECT_NOT_FOUND(4006, "Subject not found"),
+    CATEGORY_NOT_FOUND(4006, "Category not found"),
+    PRODUCT_NOT_FOUND(4007, "Product not found"),
+    VARIANT_PRODUCT_NOT_FOUND(4008, "Variant product not found"),
+    CART_NOT_FOUND(4009, "Cart not found"),
     INVALID_VALUE(3000, "Invalid value"),
     DATA_ALREADY_EXISTS(2023, "Data already exists");
 
