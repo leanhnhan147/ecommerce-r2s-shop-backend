@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.r2s.mockproject.enumrate.OrderStatus;
 import com.r2s.mockproject.enumrate.PaymentMethod;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
-@Data
+//@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -34,11 +34,11 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-//    @JsonBackReference
+    @JsonBackReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
-//    @JsonBackReference
+    @JsonBackReference
     private Address address;
 }

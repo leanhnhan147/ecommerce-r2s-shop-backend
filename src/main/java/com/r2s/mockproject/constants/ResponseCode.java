@@ -10,6 +10,7 @@ public enum ResponseCode {
     CATEGORY_NOT_FOUND(4006, "Category not found"),
     PRODUCT_NOT_FOUND(4007, "Product not found"),
     VARIANT_PRODUCT_NOT_FOUND(4008, "Variant product not found"),
+    ADDRESS_NOT_FOUND(4009, "Address not found"),
     CART_NOT_FOUND(4009, "Cart not found"),
     INVALID_VALUE(3000, "Invalid value"),
     DATA_ALREADY_EXISTS(2023, "Data already exists");

@@ -3,13 +3,13 @@ package com.r2s.mockproject.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+//@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -44,6 +44,8 @@ public class VariantProduct {
     @JsonBackReference
     private Product product;
 
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
     @OneToMany(mappedBy = "variantProduct")
     @JsonManagedReference
     private List<CartLineItem> cartLineItems;

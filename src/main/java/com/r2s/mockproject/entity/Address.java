@@ -3,14 +3,14 @@ package com.r2s.mockproject.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+//@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -38,6 +38,6 @@ public class Address {
     private User user;
 
     @OneToMany(mappedBy = "address")
-//    @JsonManagedReference
+    @JsonManagedReference
     private List<Order> orders;
 }
