@@ -12,6 +12,8 @@ public interface ProductService {
 
     Optional<Product> findByName(String name);
 
+    List<Product> findAllProductByCategoryId(Long categoryId);
+
     List<Product> getAllProduct();
 
     Product addProduct(Map<String, Object> newProduct, Category category);

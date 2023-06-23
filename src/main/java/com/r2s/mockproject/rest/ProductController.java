@@ -7,12 +7,18 @@ import com.r2s.mockproject.entity.Product;
 import com.r2s.mockproject.service.CategoryService;
 import com.r2s.mockproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,6 +53,31 @@ public class ProductController extends BaseRestController{
             return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
         }
         return super.success(new ProductDTOResponse(foundProduct));
+    }
+
+    @GetMapping("/getAllProductByCategoryId")
+    public ResponseEntity<?> getAllProductsByCategory(@RequestParam(defaultValue = "1") Long categoryId,
+                                                      @RequestParam(defaultValue = "0") Integer offset,
+                                                      @RequestParam(defaultValue = "5") Integer limit) {
+        try {
+            Pageable pageable = PageRequest.of(offset, limit);
+            List<Order> orders = new ArrayList<>();
+            if (!orders.isEmpty()) {
+                pageable = PageRequest.of(offset, limit, Sort.by(orders));
+            }
+
+            List<Product> foundProducts = productService.findAllProductByCategoryId(categoryId);
+            int startIndex = (int) pageable.getOffset();
+            int endIndex = Math.min((startIndex + pageable.getPageSize()), foundProducts.size());
+            List<Product> products = foundProducts.subList(startIndex, endIndex);
+            List<ProductDTOResponse> responses = products.stream()
+                    .map(product -> new ProductDTOResponse(product))
+                    .collect(Collectors.toList());
+            return super.success(responses);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
     @PreAuthorize("hasRole('ADMIN')")

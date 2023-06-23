@@ -18,9 +18,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private CategoryService categoryService;
-
     @Override
     public Product findProductById(Long id) {
         return this.productRepository.findById(id).orElse(null);
@@ -29,6 +26,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> findByName(String name) {
         return this.productRepository.findByName(name);
+    }
+
+    @Override
+    public List<Product> findAllProductByCategoryId(Long categoryId) {
+        return this.productRepository.findByCategory_Id(categoryId);
     }
 
     @Override
