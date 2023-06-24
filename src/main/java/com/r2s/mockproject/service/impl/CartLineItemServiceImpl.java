@@ -22,13 +22,4 @@ public class CartLineItemServiceImpl implements CartLineItemService {
         return this.cartLineItemRepository.findAll();
     }
 
-//    @Override
-//    public CartLineItem addCartLineItem(Map<String, Object> newCartLineItem, Cart cart, VariantProduct variantProduct) {
-//        CartLineItem cartLineItem = new CartLineItem();
-//        cartLineItem.setQuantity(Integer.parseInt(newCartLineItem.get("quantity").toString()));
-//        cartLineItem.setDeleted(false);
-//        cartLineItem.setCart(cart);
-//        cartLineItem.setVariantProduct(variantProduct);
-//        return this.cartLineItemRepository.save(cartLineItem);
-//    }
 }

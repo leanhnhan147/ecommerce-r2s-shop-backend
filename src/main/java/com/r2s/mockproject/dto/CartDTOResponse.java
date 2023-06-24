@@ -27,8 +27,9 @@ public class CartDTOResponse {
 
         this.cartLineItems = new ArrayList<>();
         for (CartLineItem cartLineItem : cart.getCartLineItems()){
-            this.cartLineItems.add(Map.of("cartLineItemName", cartLineItem.getVariantProduct().getName(),
-                    "quantity",cartLineItem.getQuantity() ));
+            this.cartLineItems.add(Map.of(
+                    "quantity",cartLineItem.getQuantity(),
+                    "cartLineItemName", cartLineItem.getVariantProduct().getName()));
 //            this.cartLineItems.add(Map.of("quantity", cartLineItem.getQuantity()));
         }
     }

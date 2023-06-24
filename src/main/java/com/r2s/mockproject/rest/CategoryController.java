@@ -32,7 +32,6 @@ public class CategoryController extends BaseRestController {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
@@ -52,12 +51,11 @@ public class CategoryController extends BaseRestController {
             }
 
             Category insertedCategory = categoryService.addCategory(newCategory);
-//            return super.success(new CategoryDTOResponse(insertedCategory));
-            return super.success(insertedCategory);
+            return super.success(new CategoryDTOResponse(insertedCategory));
+//            return super.success(insertedCategory);
         }catch(Exception e){
             e.printStackTrace();
         }
-
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
@@ -73,12 +71,12 @@ public class CategoryController extends BaseRestController {
 
             Category foundCategory = this.categoryService.findCategoryById(id);
             if (ObjectUtils.isEmpty(foundCategory)) {
-                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+                return super.error(ResponseCode.CATEGORY_NOT_FOUND.getCode(), ResponseCode.CATEGORY_NOT_FOUND.getMessage());
             }
 
             Category updatedCategory = categoryService.updateCategory(id, newCategory);
-//            return super.success(new CategoryDTOResponse(insertedCategory));
-            return super.success(updatedCategory);
+            return super.success(new CategoryDTOResponse(updatedCategory));
+//            return super.success(updatedCategory);
         }catch(Exception e){
             e.printStackTrace();
         }

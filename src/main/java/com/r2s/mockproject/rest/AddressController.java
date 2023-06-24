@@ -58,12 +58,12 @@ public class AddressController extends BaseRestController {
             Long userId = Long.parseLong(newAddress.get("userId").toString());
             User foundUser = this.userService.findUserById(userId);
             if (ObjectUtils.isEmpty(foundUser)) {
-                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+                return super.error(ResponseCode.USER_NOT_FOUND.getCode(), ResponseCode.USER_NOT_FOUND.getMessage());
             }
 
             Address insertedAddress = addressService.addAddress(newAddress, foundUser);
-//            return super.success(new AddressDTOResponse(insertedAddress));
-            return super.success(insertedAddress);
+            return super.success(new AddressDTOResponse(insertedAddress));
+//            return super.success(insertedAddress);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -84,7 +84,7 @@ public class AddressController extends BaseRestController {
 
             Address foundAddress = this.addressService.findAddressById(id);
             if (ObjectUtils.isEmpty(foundAddress)) {
-                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+                return super.error(ResponseCode.ADDRESS_NOT_FOUND.getCode(), ResponseCode.ADDRESS_NOT_FOUND.getMessage());
             }
 
             Address updatedAddress = addressService.updateAddress(id, newAddress);
@@ -101,7 +101,7 @@ public class AddressController extends BaseRestController {
         try {
             Address foundAddress = this.addressService.findAddressById(id);
             if (ObjectUtils.isEmpty(foundAddress)) {
-                return error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+                return error(ResponseCode.ADDRESS_NOT_FOUND.getCode(), ResponseCode.ADDRESS_NOT_FOUND.getMessage());
             }
             this.addressService.deleteAddress(id);
             return success(new AddressDTOResponse(foundAddress));

@@ -37,7 +37,7 @@ public class Address {
     @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Order> orders;
 }

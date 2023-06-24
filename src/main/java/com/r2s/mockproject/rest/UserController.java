@@ -39,7 +39,6 @@ public class UserController extends BaseRestController{
         {
             e.printStackTrace();
         }
-
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
@@ -67,13 +66,12 @@ public class UserController extends BaseRestController{
 
             User insertedUser = userService.addUser(newUser);
             if (!ObjectUtils.isEmpty(insertedUser)) {
-//                return super.success(new UserDTOResponse(insertedUser));
-                return super.success(insertedUser);
+                return super.success(new UserDTOResponse(insertedUser));
+//                return super.success(insertedUser);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 
@@ -97,18 +95,17 @@ public class UserController extends BaseRestController{
 
             User foundUser = this.userService.findUserById(id);
             if (ObjectUtils.isEmpty(foundUser)) {
-                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+                return super.error(ResponseCode.USER_NOT_FOUND.getCode(), ResponseCode.USER_NOT_FOUND.getMessage());
             }
 
             User updatedUser = userService.updateUser(id, newUser);
             if (!ObjectUtils.isEmpty(updatedUser)) {
-//                return super.success(new UserDTOResponse(updatedUser));
-                return super.success(updatedUser);
+                return super.success(new UserDTOResponse(updatedUser));
+//                return super.success(updatedUser);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
 }

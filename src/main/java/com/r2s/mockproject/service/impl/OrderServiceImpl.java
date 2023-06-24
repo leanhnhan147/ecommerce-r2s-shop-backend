@@ -66,13 +66,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void  deleteCartLineItemFromCart(List<CartLineItem> cartLineItems, Cart cart ) {
-        List<CartLineItem> removedCartLineItems = new ArrayList<>();
         for (CartLineItem cartLineItem : cartLineItems) {
             cartLineItem.setDeleted(true);
+            cartLineItem.setCart(null);
             this.cartLineItemRepository.save(cartLineItem);
-            removedCartLineItems.add(cartLineItem);
         }
-        cartLineItems.removeAll(removedCartLineItems);
         cart.setCartLineItems(cartLineItems);
         this.cartRepository.save(cart);
     }

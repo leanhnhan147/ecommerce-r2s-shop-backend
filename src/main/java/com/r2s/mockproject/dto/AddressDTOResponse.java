@@ -17,7 +17,7 @@ public class AddressDTOResponse {
     private String country;
 
     private Long userId;
-    private String userName;
+//    private String userName;
     private String fullName;
 
     public AddressDTOResponse(Address address) {
@@ -29,7 +29,7 @@ public class AddressDTOResponse {
         if(!ObjectUtils.isEmpty(address.getUser())){
             User user = address.getUser();
             this.userId = user.getId();
-            this.userName = user.getUsername();
+//            this.userName = user.getUsername();
             this.fullName = user.getFullName();
         }
     }

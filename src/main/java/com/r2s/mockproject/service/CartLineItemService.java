@@ -9,5 +9,4 @@ public interface CartLineItemService {
 
     List<CartLineItem> getAllCartLineItem();
 
-//    CartLineItem addCartLineItem(Map<String, Object> newCartLineItem, Cart cart, VariantProduct variantProduct);
 }

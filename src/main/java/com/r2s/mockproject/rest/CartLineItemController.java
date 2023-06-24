@@ -42,35 +42,4 @@ public class CartLineItemController extends  BaseRestController{
         }
         return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
     }
-
-//    @PostMapping("")
-//    public ResponseEntity<?> addCartLineItem(@RequestBody(required = true) Map<String, Object> newCartLineItem){
-//        try{
-//            if(ObjectUtils.isEmpty(newCartLineItem)
-//                    || ObjectUtils.isEmpty(newCartLineItem.get("quantity"))
-//                    || ObjectUtils.isEmpty(newCartLineItem.get("cartId"))
-//                    || ObjectUtils.isEmpty(newCartLineItem.get("variantProductId"))){
-//                return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
-//            }
-//
-//            Long cartId = Long.parseLong(newCartLineItem.get("cartId").toString());
-//            Cart foundCart = this.cartService.findCartById(cartId);
-//            if (ObjectUtils.isEmpty(foundCart)) {
-//                return super.error(ResponseCode.CART_NOT_FOUND.getCode(), ResponseCode.CART_NOT_FOUND.getMessage());
-//            }
-//
-//            Long variantProductId = Long.parseLong(newCartLineItem.get("variantProductId").toString());
-//            VariantProduct foundVariantProduct = this.variantProductService.findVariantProductById(variantProductId);
-//            if (ObjectUtils.isEmpty(foundVariantProduct)) {
-//                return super.error(ResponseCode.VARIANT_PRODUCT_NOT_FOUND.getCode(), ResponseCode.VARIANT_PRODUCT_NOT_FOUND.getMessage());
-//            }
-//
-//            CartLineItem insertedCartLineItem = cartLineItemService.addCartLineItem(newCartLineItem, foundCart, foundVariantProduct);
-////            return super.success(new CartLineItemDTOResponse(insertedCartLineItem));
-//            return super.success(insertedCartLineItem);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//        return super.error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
-//    }
 }
