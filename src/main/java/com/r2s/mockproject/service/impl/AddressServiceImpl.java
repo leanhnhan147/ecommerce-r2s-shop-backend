@@ -1,8 +1,10 @@
 package com.r2s.mockproject.service.impl;
 
 import com.r2s.mockproject.entity.Address;
+import com.r2s.mockproject.entity.Order;
 import com.r2s.mockproject.entity.User;
 import com.r2s.mockproject.repository.AddressRepository;
+import com.r2s.mockproject.repository.OrderRepository;
 import com.r2s.mockproject.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     public Address findAddressById(Long id) {
@@ -49,7 +54,14 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void deleteAddress(Long id) {
+        Address address = this.findAddressById(id);
+        List<Order> orders = address.getOrders();
+        for(Order order : orders){
+            order.setAddress(null);
+            this.orderRepository.save(order);
+        }
+        address.setOrders(orders);
+        this.addressRepository.save(address);
         this.addressRepository.deleteById(id);
     }
-
 }
