@@ -31,7 +31,7 @@ public class OrderController extends BaseRestController{
     private AddressService addressService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllProduct(){
+    public ResponseEntity<?> getAllOrder(){
         try {
             List<Order> orders = this.orderService.getAllOrder();
             List<OrderDTOResponse> responses = orders.stream()
