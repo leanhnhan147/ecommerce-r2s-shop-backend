@@ -50,7 +50,7 @@ public class ProductController extends BaseRestController{
     public ResponseEntity<?> getProductById(@RequestParam(name = "id", required = false, defaultValue = "1") Long id) {
         Product foundProduct = this.productService.findProductById(id);
         if (ObjectUtils.isEmpty(foundProduct)) {
-            return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+            return super.error(ResponseCode.PRODUCT_NOT_FOUND.getCode(), ResponseCode.PRODUCT_NOT_FOUND.getMessage());
         }
         return super.success(new ProductDTOResponse(foundProduct));
     }
@@ -64,6 +64,11 @@ public class ProductController extends BaseRestController{
             List<Order> orders = new ArrayList<>();
             if (!orders.isEmpty()) {
                 pageable = PageRequest.of(offset, limit, Sort.by(orders));
+            }
+
+            Category foundCategory = this.categoryService.findCategoryById(categoryId);
+            if (ObjectUtils.isEmpty(foundCategory)) {
+                return super.error(ResponseCode.CATEGORY_NOT_FOUND.getCode(), ResponseCode.CATEGORY_NOT_FOUND.getMessage());
             }
 
             List<Product> foundProducts = productService.findAllProductByCategoryId(categoryId);
@@ -99,7 +104,7 @@ public class ProductController extends BaseRestController{
             Long categoryId = Long.parseLong(newProduct.get("categoryId").toString());
             Category foundCategory = this.categoryService.findCategoryById(categoryId);
             if (ObjectUtils.isEmpty(foundCategory)) {
-                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+                return super.error(ResponseCode.CATEGORY_NOT_FOUND.getCode(), ResponseCode.CATEGORY_NOT_FOUND.getMessage());
             }
 
             Product insertedProduct = productService.addProduct(newProduct, foundCategory);
@@ -123,7 +128,7 @@ public class ProductController extends BaseRestController{
 
             Product foundProduct = this.productService.findProductById(id);
             if (ObjectUtils.isEmpty(foundProduct)) {
-                return super.error(ResponseCode.NOT_FOUND.getCode(), ResponseCode.NOT_FOUND.getMessage());
+                return super.error(ResponseCode.PRODUCT_NOT_FOUND.getCode(), ResponseCode.PRODUCT_NOT_FOUND.getMessage());
             }
 
             Product updatedProduct = productService.updateProduct(id, newProduct);
