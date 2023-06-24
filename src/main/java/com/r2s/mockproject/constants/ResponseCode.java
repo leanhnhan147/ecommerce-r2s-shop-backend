@@ -12,7 +12,7 @@ public enum ResponseCode {
     VARIANT_PRODUCT_NOT_FOUND(4008, "Variant product not found"),
     ADDRESS_NOT_FOUND(4009, "Address not found"),
     CART_NOT_FOUND(4009, "Cart not found"),
-    INVALID_VALUE(3000, "Invalid value"),
+    FAILED_LOGIN(3000, "Failed login"),
     DATA_ALREADY_EXISTS(2023, "Data already exists");
 
     private int code;

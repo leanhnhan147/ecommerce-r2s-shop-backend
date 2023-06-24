@@ -26,12 +26,11 @@ public class AuthenController extends BaseRestController {
                     .authenticate(new UsernamePasswordAuthenticationToken(authen.getUserName(), authen.getPassword()));
 
             String token = JwtUtils.generateToken(authen.getUserName());
-            AuthenDTOResponse response = new AuthenDTOResponse(token, "Dang nhap thanh cong!");
+            AuthenDTOResponse response = new AuthenDTOResponse(token, "Successful login!");
             return success(response);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return error(ResponseCode.NO_CONTENT.getCode(), ResponseCode.NO_CONTENT.getMessage());
+        return error(ResponseCode.FAILED_LOGIN.getCode(), ResponseCode.FAILED_LOGIN.getMessage());
     }
 }
