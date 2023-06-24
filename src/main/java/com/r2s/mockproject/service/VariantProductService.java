@@ -13,6 +13,8 @@ public interface VariantProductService {
 
     Optional<VariantProduct> findByName(String name);
 
+    List<VariantProduct> findVariantProductByProductId(Long productId);
+
     List<VariantProduct> getAllVariantProduct();
 
     VariantProduct addVariantProduct(Map<String, Object> newVariantProduct, Product product);

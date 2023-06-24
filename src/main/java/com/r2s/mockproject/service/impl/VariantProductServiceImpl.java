@@ -28,6 +28,11 @@ public class VariantProductServiceImpl implements VariantProductService {
     }
 
     @Override
+    public List<VariantProduct> findVariantProductByProductId(Long productId) {
+        return this.variantProductRepository.findByProduct_Id(productId);
+    }
+
+    @Override
     public List<VariantProduct> getAllVariantProduct() {
         return this.variantProductRepository.findAll();
     }
