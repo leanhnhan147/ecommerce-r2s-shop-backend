@@ -54,7 +54,6 @@ public class OrderController extends BaseRestController{
                 return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
             }
 
-
             Long userId = Long.parseLong(newOrder.get("userId").toString());
             User foundUser = this.userService.findUserById(userId);
             if (ObjectUtils.isEmpty(foundUser)) {

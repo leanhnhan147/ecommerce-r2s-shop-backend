@@ -3,7 +3,6 @@ package com.r2s.mockproject.service.impl;
 import com.r2s.mockproject.entity.Category;
 import com.r2s.mockproject.entity.Product;
 import com.r2s.mockproject.repository.ProductRepository;
-import com.r2s.mockproject.service.CategoryService;
 import com.r2s.mockproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findProductById(Long id) {
+//        return this.productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         return this.productRepository.findById(id).orElse(null);
     }
 

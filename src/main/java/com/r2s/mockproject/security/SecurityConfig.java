@@ -9,12 +9,15 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -45,20 +48,26 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login")
+                .requestMatchers("/login", "/**")
+                .permitAll()
+                .requestMatchers("/v3-docs/**", "/swagger-ui/**", "/v2-docs/**",
+                        "/swagger-resources/**", "/api-docs/**", "/swagger-ui/**",
+                        "/swagger-ui.html", "/swagger-ui/index.html", "/v3/api-docs/**", "/doc",
+                        "/static/images/**")
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/users/**", "/categories/**", "/variant-product/**",
                         "/addresses/**", "/cart/**","/cart-line-item/**", "/orders/**")
                 .hasAnyRole("ADMIN", "USER")
-                .and()
-                .authorizeHttpRequests()
-                .anyRequest().authenticated()
+//                .and()
+//                .authorizeHttpRequests()
+//                .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider(userDetailsService))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).build();
     }
+
 }

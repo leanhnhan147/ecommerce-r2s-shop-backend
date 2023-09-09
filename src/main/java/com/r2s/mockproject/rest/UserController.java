@@ -7,6 +7,12 @@ import com.r2s.mockproject.entity.User;
 import com.r2s.mockproject.repository.RoleRepository;
 import com.r2s.mockproject.repository.UserRepository;
 import com.r2s.mockproject.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,12 +27,25 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "User API", description = "All User API")
 public class UserController extends BaseRestController{
     @Autowired
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
 
+    @Operation(summary = "Return message and data User")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = UserDTOResponse.class)
+                    )
+            )
+    })
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> getAllUsers() {
         try {
@@ -50,13 +69,22 @@ public class UserController extends BaseRestController{
                 return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
             }
 
-            if (ObjectUtils.isEmpty(newUser.get("username"))
-                    || ObjectUtils.isEmpty(newUser.get("password"))
-                    || ObjectUtils.isEmpty(newUser.get("fullName"))
-                    || ObjectUtils.isEmpty(newUser.get("email"))
-                    || ObjectUtils.isEmpty(newUser.get("phone"))) {
+            UserDTORequest userDTORequest = new UserDTORequest(newUser);
+            if (ObjectUtils.isEmpty(userDTORequest.getUsername())
+                    || ObjectUtils.isEmpty(userDTORequest.getPassword())
+                    || ObjectUtils.isEmpty(userDTORequest.getFullName())
+                    || ObjectUtils.isEmpty(userDTORequest.getEmail())
+                    || ObjectUtils.isEmpty(userDTORequest.getPhone())) {
                 return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
             }
+
+//            if (ObjectUtils.isEmpty(newUser.get("username"))
+//                    || ObjectUtils.isEmpty(newUser.get("password"))
+//                    || ObjectUtils.isEmpty(newUser.get("fullName"))
+//                    || ObjectUtils.isEmpty(newUser.get("email"))
+//                    || ObjectUtils.isEmpty(newUser.get("phone"))) {
+//                return super.error(ResponseCode.NO_PARAM.getCode(), ResponseCode.NO_PARAM.getMessage());
+//            }
 
             User foundUser = this.userService.findByUsername(newUser.get("username").toString()).orElse(null);
             if (!ObjectUtils.isEmpty(foundUser)) {
